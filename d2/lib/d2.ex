@@ -74,19 +74,23 @@ defmodule D2 do
   end
 
   def factors(1) do
+    # String of length 1 should return false automatically
     []
   end
 
   def factors(n) when n > 1 do
-    # Iterate from 1 up to n and check for divisibility
-    1..(n - 1)
-    |> Enum.filter(fn i -> rem(n, i) == 0 end)
+    # Efficient factorization algorithm
+    # Get factors till sqrt(n)
+    facs = 1..trunc(:math.sqrt(n)) |> Enum.filter(fn i -> rem(n, i) == 0 end)
+    # Get remaining factors after sqrt(n)
+    Enum.concat(facs, Enum.map(Enum.reverse(facs), fn x -> div(n, x) end))
   end
 
   def atleasttwice(str) do
     str
     |> String.length()
     |> factors()
+    |> List.delete_at(-1)
     |> Enum.reduce(
       false,
       fn k, prev ->
