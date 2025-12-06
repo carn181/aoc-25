@@ -21,3 +21,5 @@ d2-*.tar
 
 # Temporary files, for example, from tests.
 /tmp/
+
+input.txt
