@@ -74,25 +74,6 @@ defmodule D7 do
     0 <= i && i < length(map) && 0 <= j && j < length(hd(map)) 
   end
 
-  def beampath(map, i, j, visited) do
-    cond do
-      MapSet.member?(visited, {i, j}) -> 
-        0
-
-      !valid(map, i, j) -> 
-        1
-
-      at(map, i, j) == "^" ->
-        new_visited = MapSet.put(visited, {i, j})
-        left = beampath(map, i+1, j-1, new_visited) 
-        right = beampath(map, i+1, j+1, new_visited)
-        left + right
-      true ->
-        new_visited = MapSet.put(visited, {i, j})
-        beampath(map, i+1, j, new_visited)
-    end
-  end
-
   def beam(map, i, j, visited) do
     cond do
       !valid(map, i, j) || MapSet.member?(visited, {i, j}) -> 
